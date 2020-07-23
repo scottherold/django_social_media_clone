@@ -1,5 +1,5 @@
 from django.shortcuts import render
-from django.core.urlresolvers import reverse_lazy
+from django.urls import reverse_lazy
 from django.views.generic import CreateView
 
 from . import forms
@@ -12,7 +12,7 @@ class SignUp(CreateView):
     Attributes:
         form_class (Class): The ModelForm to link to the SignUp class.
         success_url (str): The route for the client if the form is valid, and
-        saved to the database. The Django urlresolvers reverse_lazy() function
+        saved to the database. The Django urls reverse_lazy() function
         is used to prevent the client from taking the route, unless the form
         information is successfully submitted.
         template_name (str): The directory route for the template to be
