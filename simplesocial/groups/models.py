@@ -41,24 +41,29 @@ class Group(models.Model):
     def save(self, *args, **kwargs):
         """Overwrites the save function to slugify the Group's name attribute
         as the slug attribute and uses the misaka library to save markup for
-        the description.html field. Calls the models.Model save function."""
+        the description_html field. Calls the models.Model save function."""
         self.slug = slugify(self.name)
         self.description_html = misaka.html(self.description)
         super().save(*args, **kwargs)
 
     def get_absolute_url(self):
         """Returns a reverse function that routes the client to the Group name
-        route using the Group's slug attribute"""
+        route using the Group's slug attribute."""
         return reverse('groups:single', kwargs={'slug': self.slug})
+
+    class Meta:
+        """Sets the metadata for the model to order the queried data by the
+        name attribute."""
+        ordering = ['name']
 
 class GroupMember(models.Model):
     """A class representing the membership of a User model to a group. Inherits
     the Django models.Model class.
 
     Attributes:
-        group (Class): The group that the GroupMember belongs. Has a foreign
+        group (str): The group that the GroupMember belongs. Has a foreign
         key relationship with a Group model.
-        user (Class): The User linked to the GroupMember model. Has a
+        user (str): The User linked to the GroupMember model. Has a
         foreign key relationship with a User model.
     """
     group = models.ForeignKey(Group, related_name='memberships')
