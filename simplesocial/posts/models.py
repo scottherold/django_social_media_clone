@@ -24,11 +24,11 @@ class Post(models.Model):
         group (str): Foreign key reference to the group in which the message
         belongs.
     """
-    user = models.ForeignKey(User, related_name='posts')
+    user = models.ForeignKey(User, related_name='posts', on_delete=models.CASCADE)
     created_at = models.DateTimeField(auto_now=True)
     message = models.TextField()
     message_html = models.TextField(editable=False)
-    group = models.ForeignKey(Group, related_name='posts', null=True, blank=True)
+    group = models.ForeignKey(Group, related_name='posts', on_delete=models.CASCADE, null=True, blank=True)
 
     def __str__(self):
         """String representation of the Post class. Returns the Post's name

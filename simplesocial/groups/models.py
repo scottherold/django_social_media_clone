@@ -66,8 +66,8 @@ class GroupMember(models.Model):
         user (str): The User linked to the GroupMember model. Has a
         foreign key relationship with a User model.
     """
-    group = models.ForeignKey(Group, related_name='memberships')
-    user = models.ForeignKey(User, related_name='user_groups')
+    group = models.ForeignKey(Group, related_name='memberships', on_delete=models.CASCADE)
+    user = models.ForeignKey(User, related_name='user_groups', on_delete=models.CASCADE)
 
     def __str__(self):
         """String representation of the GroupMember class. Returns the username

@@ -11,7 +11,7 @@
                 </a>
             </h2>
         {% endif %}
-        <h2>Gruops</h2>
+        <h2>Groups</h2>
         <p>Welcome to the groups page!</p>
     </div>
     {% if user.is_authenticated %}
@@ -28,7 +28,7 @@
 <div class="col-md-8">
     <div class="list-group">
         {% for group in object_list %}
-            <a class='list-grou-item' href="{% url 'groups:single' slug=group.slug %}">
+            <a class='list-group-item' href="{% url 'groups:single' slug=group.slug %}">
                 <h3 class='title list-group-item-heading'>{{ group.name }}</h3>
                 <div class="list-group-item-text container-fuild">
                     {{ group.description_html|safe }}
@@ -38,7 +38,7 @@
                             member{{ group.members.count|pluralize }}
                         </div>
                         <div class="col-md-4">
-                            <span class='badge'>{{ group.post.count }}</span>
+                            <span class='badge'>{{ group.posts.count }}</span>
                             post{{ group.posts.count|pluralize }}
                         </div>
                     </div>
@@ -48,4 +48,4 @@
     </div>
 </div>
 
-{% endblcok %}
+{% endblock %}

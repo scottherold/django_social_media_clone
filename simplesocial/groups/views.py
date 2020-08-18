@@ -1,5 +1,5 @@
 from django.contrib import messages
-from django.contrib.mixins import LoginRequiredMixin, PermissionRequiredMixin
+from django.contrib.auth.mixins import LoginRequiredMixin, PermissionRequiredMixin
 from django.urls import reverse
 from django.shortcuts import render, get_object_or_404
 from django.views import generic
@@ -59,7 +59,7 @@ class JoinGroup(LoginRequiredMixin, generic.RedirectView):
         group = get_object_or_404(Group, slug=self.kwargs.get('slug'))
 
         try:
-            GroupMember.object.create(user=self.request.user, group=group)
+            GroupMember.objects.create(user=self.request.user, group=group)
         except:
             messages.warning(self.request,'Warning already a member!')
         else:

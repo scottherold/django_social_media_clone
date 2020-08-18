@@ -1,7 +1,7 @@
 from django.contrib import messages
-from django.contribu.auth import get_user_model
+from django.contrib.auth import get_user_model
 from django.contrib.auth.mixins import LoginRequiredMixin
-from django.core.urlresolvers import reverse_lazy
+from django.urls import reverse_lazy
 from django.shortcuts import render
 from django.http import Http404
 from django.views import generic
@@ -45,7 +45,7 @@ class UserPosts(generic.ListView):
         the user exists and the posts tied to that user if they can be fetched.
         Raises a Http404 otherwise."""
         try:
-            self.post.user = User.objects.prefetch_related('posts').get(username__iexact=self.kwargs.get('username'))
+            self.post_user = User.objects.prefetch_related('posts').get(username__iexact=self.kwargs.get('username'))
         except User.DoesNotExist:
             raise Http404
         else: 
@@ -88,7 +88,7 @@ class CreatePost(LoginRequiredMixin, SelectRelatedMixin, generic.CreateView):
     fields = ('message', 'group')
     model = models.Post
 
-    def form_Valid(self, form):
+    def form_valid(self, form):
         """Returns a boolean if the form is valid. Saves the information to the
         database if the form is valid."""
         self.object = form.save(commit=False)
@@ -106,6 +106,7 @@ class DeletePost(LoginRequiredMixin, SelectRelatedMixin, generic.DeleteView):
     """
     fields = ('message', 'group')
     model = models.Post
+    select_related = ('user', 'group')
     success_url = reverse_lazy('posts:all')
 
     def get_queryset(self):
