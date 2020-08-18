@@ -1,3 +1,4 @@
+from django.contrib import messages
 from django.contribu.auth import get_user_model
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.core.urlresolvers import reverse_lazy
